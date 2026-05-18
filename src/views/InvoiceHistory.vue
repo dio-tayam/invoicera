@@ -335,27 +335,21 @@ async function downloadPDFFor(inv) {
     const el = document.getElementById('history-pdf-target')
     const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false })
     const imgData = canvas.toDataURL('image/png')
-    const pdf   = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pageW = pdf.internal.pageSize.getWidth()
-    const pageH = pdf.internal.pageSize.getHeight()
-    const margin = 10
+    const pdf    = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+    const pageW  = pdf.internal.pageSize.getWidth()
+    const pageH  = pdf.internal.pageSize.getHeight()
+    const imgH   = (canvas.height * pageW) / canvas.width
+    const bottomMargin = 12
+    const sliceH = pageH - bottomMargin
 
-    const contentW   = pageW - 2 * margin
-    const imgScaledH = (canvas.height / canvas.width) * contentW
-    const sliceH     = pageH - 2 * margin
-
-    let yOffset = 0
+    let y = 0
     let pageNum = 0
-    while (yOffset < imgScaledH) {
+    while (y < imgH) {
       if (pageNum > 0) pdf.addPage()
-
-      pdf.addImage(imgData, 'PNG', margin, margin - yOffset, contentW, imgScaledH)
-
+      pdf.addImage(imgData, 'PNG', 0, -y, pageW, imgH)
       pdf.setFillColor(255, 255, 255)
-      pdf.rect(0, 0, pageW, margin, 'F')
-      pdf.rect(0, pageH - margin, pageW, margin + 1, 'F')
-
-      yOffset += sliceH
+      pdf.rect(0, pageH - bottomMargin, pageW, bottomMargin + 1, 'F')
+      y += sliceH
       pageNum++
     }
     pdf.save(`${inv.invoiceNumber}.pdf`)

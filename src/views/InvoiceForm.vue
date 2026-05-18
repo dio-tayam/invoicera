@@ -669,31 +669,23 @@ async function downloadPDF() {
     const el = document.getElementById('invoice-print-target')
     const canvas = await html2canvas(el, { scale: 2, useCORS: true, backgroundColor: '#ffffff', logging: false })
     const imgData = canvas.toDataURL('image/png')
-    const pdf   = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
-    const pageW = pdf.internal.pageSize.getWidth()   // 210 mm
-    const pageH = pdf.internal.pageSize.getHeight()  // 297 mm
-    const margin = 10 // mm — white gutter on every edge
+    const pdf    = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
+    const pageW  = pdf.internal.pageSize.getWidth()
+    const pageH  = pdf.internal.pageSize.getHeight()
+    const imgH   = (canvas.height * pageW) / canvas.width
+    // Only add a bottom gutter so content never bleeds to the very edge
+    const bottomMargin = 12
+    const sliceH = pageH - bottomMargin
 
-    // Scale image to fill width inside left+right margins
-    const contentW  = pageW - 2 * margin
-    const imgScaledH = (canvas.height / canvas.width) * contentW
-    // Usable vertical space per page between top and bottom gutter
-    const sliceH = pageH - 2 * margin
-
-    let yOffset = 0
+    let y = 0
     let pageNum = 0
-    while (yOffset < imgScaledH) {
+    while (y < imgH) {
       if (pageNum > 0) pdf.addPage()
-
-      // Draw invoice image shifted up by accumulated offset
-      pdf.addImage(imgData, 'PNG', margin, margin - yOffset, contentW, imgScaledH)
-
-      // White bars mask content that bleeds into the top/bottom margins
+      pdf.addImage(imgData, 'PNG', 0, -y, pageW, imgH)
+      // White bar at the bottom of every page
       pdf.setFillColor(255, 255, 255)
-      pdf.rect(0, 0, pageW, margin, 'F')
-      pdf.rect(0, pageH - margin, pageW, margin + 1, 'F')
-
-      yOffset += sliceH
+      pdf.rect(0, pageH - bottomMargin, pageW, bottomMargin + 1, 'F')
+      y += sliceH
       pageNum++
     }
     pdf.save(`${invoiceNumber.value}.pdf`)

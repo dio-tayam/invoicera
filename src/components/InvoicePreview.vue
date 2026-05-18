@@ -5,20 +5,20 @@
     <div style="background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 60%, #2563eb 100%); padding: 36px 48px;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;">
 
-        <!-- Sender -->
+        <!-- Left: INVOICE title + Sender -->
         <div>
-          <div v-if="data.sender?.businessName">
-            <div style="font-size: 16px; font-weight: 800; color: #fff;">{{ data.sender.businessName }}</div>
-            <div v-if="data.sender.address" style="font-size: 12px; color: #bfdbfe; margin-top: 4px; white-space: pre-line; line-height: 1.5;">{{ data.sender.address }}</div>
+          <div style="font-size: 32px; font-weight: 900; color: #fff; letter-spacing: 0.06em; line-height: 1;">INVOICE</div>
+          <div v-if="data.sender?.businessName" style="margin-top: 16px;">
+            <div style="font-size: 15px; font-weight: 700; color: #fff;">{{ data.sender.businessName }}</div>
+            <div v-if="data.sender.address" style="font-size: 12px; color: #bfdbfe; margin-top: 3px; white-space: pre-line; line-height: 1.5;">{{ data.sender.address }}</div>
             <div v-if="data.sender.email" style="font-size: 12px; color: #bfdbfe; margin-top: 2px;">{{ data.sender.email }}</div>
             <div v-if="senderPhone" style="font-size: 12px; color: #bfdbfe; margin-top: 2px;">{{ senderPhone }}</div>
           </div>
         </div>
 
-        <!-- Invoice Meta -->
+        <!-- Right: Invoice meta only -->
         <div style="text-align: right; flex-shrink: 0;">
-          <div style="font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.5px;">INVOICE</div>
-          <div style="margin-top: 12px; display: flex; flex-direction: column; gap: 4px;">
+          <div style="display: flex; flex-direction: column; gap: 4px;">
             <div style="display: flex; justify-content: flex-end; gap: 16px; align-items: baseline;">
               <span style="font-size: 11px; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.08em;">Number</span>
               <span style="font-size: 14px; font-weight: 700; color: #fff;">{{ data.invoiceNumber }}</span>
