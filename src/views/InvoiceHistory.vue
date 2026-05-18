@@ -338,12 +338,25 @@ async function downloadPDFFor(inv) {
     const pdf   = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' })
     const pageW = pdf.internal.pageSize.getWidth()
     const pageH = pdf.internal.pageSize.getHeight()
-    const imgH  = (canvas.height * pageW) / canvas.width
-    let y = 0
-    while (y < imgH) {
-      if (y > 0) pdf.addPage()
-      pdf.addImage(imgData, 'PNG', 0, -y, pageW, imgH)
-      y += pageH
+    const margin = 10
+
+    const contentW   = pageW - 2 * margin
+    const imgScaledH = (canvas.height / canvas.width) * contentW
+    const sliceH     = pageH - 2 * margin
+
+    let yOffset = 0
+    let pageNum = 0
+    while (yOffset < imgScaledH) {
+      if (pageNum > 0) pdf.addPage()
+
+      pdf.addImage(imgData, 'PNG', margin, margin - yOffset, contentW, imgScaledH)
+
+      pdf.setFillColor(255, 255, 255)
+      pdf.rect(0, 0, pageW, margin, 'F')
+      pdf.rect(0, pageH - margin, pageW, margin + 1, 'F')
+
+      yOffset += sliceH
+      pageNum++
     }
     pdf.save(`${inv.invoiceNumber}.pdf`)
     showToast('PDF downloaded!')

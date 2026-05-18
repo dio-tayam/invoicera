@@ -5,13 +5,11 @@
     <div style="background: linear-gradient(135deg, #1e3a8a 0%, #1d4ed8 60%, #2563eb 100%); padding: 36px 48px;">
       <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 24px;">
 
-        <!-- Brand + Sender -->
+        <!-- Sender -->
         <div>
-          <div style="font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.5px; line-height: 1;">Invoicera</div>
-          <div style="font-size: 12px; color: #93c5fd; font-weight: 500; margin-top: 4px; letter-spacing: 0.05em;">Invoice Generator</div>
-          <div v-if="data.sender?.businessName" style="margin-top: 16px;">
-            <div style="font-size: 15px; font-weight: 700; color: #fff;">{{ data.sender.businessName }}</div>
-            <div v-if="data.sender.address" style="font-size: 12px; color: #bfdbfe; margin-top: 3px; white-space: pre-line;">{{ data.sender.address }}</div>
+          <div v-if="data.sender?.businessName">
+            <div style="font-size: 16px; font-weight: 800; color: #fff;">{{ data.sender.businessName }}</div>
+            <div v-if="data.sender.address" style="font-size: 12px; color: #bfdbfe; margin-top: 4px; white-space: pre-line; line-height: 1.5;">{{ data.sender.address }}</div>
             <div v-if="data.sender.email" style="font-size: 12px; color: #bfdbfe; margin-top: 2px;">{{ data.sender.email }}</div>
             <div v-if="senderPhone" style="font-size: 12px; color: #bfdbfe; margin-top: 2px;">{{ senderPhone }}</div>
           </div>
