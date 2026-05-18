@@ -79,10 +79,10 @@
               <td style="padding: 12px 14px; text-align: center; font-size: 13px; color: #475569; border-bottom: 1px solid #f1f5f9;">
                 {{ item.quantity }}
               </td>
-              <td style="padding: 12px 14px; text-align: right; font-size: 13px; color: #475569; border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 12px 14px; text-align: right; font-size: 13px; color: #475569; border-bottom: 1px solid #f1f5f9; word-break: break-all;">
                 {{ formatCurrency(item.unitPrice, data.currency) }}
               </td>
-              <td style="padding: 12px 14px; text-align: right; font-size: 13px; font-weight: 600; color: #1e293b; border-bottom: 1px solid #f1f5f9;">
+              <td style="padding: 12px 14px; text-align: right; font-size: 13px; font-weight: 600; color: #1e293b; border-bottom: 1px solid #f1f5f9; word-break: break-all;">
                 {{ formatCurrency(item.quantity * item.unitPrice, data.currency) }}
               </td>
             </tr>
@@ -93,17 +93,17 @@
       <!-- Totals -->
       <div style="display: flex; justify-content: flex-end; margin-bottom: 28px;">
         <div style="width: 280px;">
-          <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
-            <span style="font-size: 13px; color: #64748b;">Subtotal</span>
-            <span style="font-size: 13px; font-weight: 500; color: #1e293b;">{{ formatCurrency(data.subtotal, data.currency) }}</span>
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
+            <span style="font-size: 13px; color: #64748b; flex-shrink: 0;">Subtotal</span>
+            <span style="font-size: 13px; font-weight: 500; color: #1e293b; text-align: right; word-break: break-all;">{{ formatCurrency(data.subtotal, data.currency) }}</span>
           </div>
-          <div v-if="data.taxRate > 0" style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
-            <span style="font-size: 13px; color: #64748b;">Tax ({{ data.taxRate }}%)</span>
-            <span style="font-size: 13px; font-weight: 500; color: #1e293b;">{{ formatCurrency(data.taxAmount, data.currency) }}</span>
+          <div v-if="data.taxRate > 0" style="display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; padding: 8px 0; border-bottom: 1px solid #f1f5f9;">
+            <span style="font-size: 13px; color: #64748b; flex-shrink: 0; white-space: nowrap;">Tax ({{ data.taxRate }}%)</span>
+            <span style="font-size: 13px; font-weight: 500; color: #1e293b; text-align: right; word-break: break-all;">{{ formatCurrency(data.taxAmount, data.currency) }}</span>
           </div>
-          <div style="display: flex; justify-content: space-between; padding: 14px 16px; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border-radius: 10px; margin-top: 8px;">
-            <span style="font-size: 15px; font-weight: 700; color: #fff;">Total Due</span>
-            <span style="font-size: 18px; font-weight: 800; color: #fff;">{{ formatCurrency(data.total, data.currency) }}</span>
+          <div style="padding: 14px 16px; background: linear-gradient(135deg, #1e3a8a, #1d4ed8); border-radius: 10px; margin-top: 8px;">
+            <div style="font-size: 11px; font-weight: 600; color: #93c5fd; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 4px;">Total Due</div>
+            <div style="font-size: 18px; font-weight: 800; color: #fff; word-break: break-all; line-height: 1.3;">{{ formatCurrency(data.total, data.currency) }}</div>
           </div>
         </div>
       </div>

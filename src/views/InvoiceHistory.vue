@@ -89,9 +89,9 @@
                 Due {{ formatDate(inv.dueDate) }}
               </div>
             </div>
-            <div class="text-right flex-shrink-0">
-              <div class="text-base font-extrabold text-blue-600">{{ formatCurrency(inv.total, inv.currency) }}</div>
-              <div class="text-xs text-slate-400 mt-0.5">{{ formatDate(inv.invoiceDate) }}</div>
+            <div class="text-right flex-shrink-0 max-w-[48%]">
+              <div class="font-bold text-blue-600 text-sm break-all leading-snug">{{ formatCurrency(inv.total, inv.currency) }}</div>
+              <div class="text-xs text-slate-400 mt-0.5 whitespace-nowrap">{{ formatDate(inv.invoiceDate) }}</div>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-2">
@@ -138,8 +138,8 @@
             <div class="text-sm text-slate-400 truncate">{{ inv.sender?.businessName || '' }}</div>
           </div>
 
-          <div class="text-right flex-shrink-0 w-28">
-            <div class="text-base font-extrabold text-blue-600">{{ formatCurrency(inv.total, inv.currency) }}</div>
+          <div class="text-right min-w-0 flex-shrink">
+            <div class="font-bold text-blue-600 text-sm break-all leading-snug">{{ formatCurrency(inv.total, inv.currency) }}</div>
             <div v-if="inv.currency && inv.currency !== 'USD'" class="text-xs text-slate-400 mt-0.5">{{ inv.currency }}</div>
           </div>
 

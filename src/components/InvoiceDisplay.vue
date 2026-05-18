@@ -81,10 +81,10 @@
             </thead>
             <tbody class="divide-y divide-slate-100">
               <tr v-for="(item, i) in data.lineItems" :key="i" :class="i % 2 === 0 ? 'bg-white' : 'bg-slate-50/50'">
-                <td class="px-4 py-3 text-xs sm:text-sm text-slate-700">{{ item.description || '—' }}</td>
-                <td class="px-3 py-3 text-xs sm:text-sm text-slate-500 text-center">{{ item.quantity }}</td>
-                <td class="px-3 py-3 text-xs sm:text-sm text-slate-500 text-right">{{ formatCurrency(item.unitPrice, data.currency) }}</td>
-                <td class="px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 text-right">{{ formatCurrency(item.quantity * item.unitPrice, data.currency) }}</td>
+                <td class="px-4 py-3 text-xs sm:text-sm text-slate-700 break-words">{{ item.description || '—' }}</td>
+                <td class="px-3 py-3 text-xs sm:text-sm text-slate-500 text-center whitespace-nowrap">{{ item.quantity }}</td>
+                <td class="px-3 py-3 text-xs sm:text-sm text-slate-500 text-right break-all">{{ formatCurrency(item.unitPrice, data.currency) }}</td>
+                <td class="px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 text-right break-all">{{ formatCurrency(item.quantity * item.unitPrice, data.currency) }}</td>
               </tr>
             </tbody>
           </table>
@@ -94,18 +94,17 @@
       <!-- Totals -->
       <div class="flex justify-end mb-6">
         <div class="w-full sm:w-72 space-y-1.5">
-          <div class="flex justify-between py-2 border-b border-slate-100">
-            <span class="text-sm text-slate-500">Subtotal</span>
-            <span class="text-sm font-semibold text-slate-700">{{ formatCurrency(data.subtotal, data.currency) }}</span>
+          <div class="flex justify-between items-start gap-4 py-2 border-b border-slate-100">
+            <span class="text-sm text-slate-500 flex-shrink-0">Subtotal</span>
+            <span class="text-sm font-semibold text-slate-700 text-right break-all min-w-0">{{ formatCurrency(data.subtotal, data.currency) }}</span>
           </div>
-          <div v-if="data.taxRate > 0" class="flex justify-between py-2 border-b border-slate-100">
-            <span class="text-sm text-slate-500">Tax ({{ data.taxRate }}%)</span>
-            <span class="text-sm font-semibold text-slate-700">{{ formatCurrency(data.taxAmount, data.currency) }}</span>
+          <div v-if="data.taxRate > 0" class="flex justify-between items-start gap-4 py-2 border-b border-slate-100">
+            <span class="text-sm text-slate-500 flex-shrink-0 whitespace-nowrap">Tax ({{ data.taxRate }}%)</span>
+            <span class="text-sm font-semibold text-slate-700 text-right break-all min-w-0">{{ formatCurrency(data.taxAmount, data.currency) }}</span>
           </div>
-          <div class="flex justify-between bg-gradient-to-r from-blue-800 to-blue-700
-                      text-white rounded-xl px-4 py-3.5 mt-1">
-            <span class="font-bold text-sm sm:text-base">Total Due</span>
-            <span class="font-black text-base sm:text-lg">{{ formatCurrency(data.total, data.currency) }}</span>
+          <div class="bg-gradient-to-r from-blue-800 to-blue-700 text-white rounded-xl px-4 py-4 mt-1">
+            <div class="text-xs font-semibold text-blue-200 uppercase tracking-wider mb-1">Total Due</div>
+            <div class="font-black text-lg sm:text-xl break-all leading-tight">{{ formatCurrency(data.total, data.currency) }}</div>
           </div>
         </div>
       </div>
